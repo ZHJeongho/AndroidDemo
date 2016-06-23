@@ -38,15 +38,25 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         Log.d(TAG, "onResume");
+
+
     }
 
     public void changeFragment(View v){
         FragmentTransaction transaction = fm.beginTransaction();
         SecondFragment sf = new SecondFragment();
+
 //        transaction.replace(R.id.fl_content, sf);
 //        transaction.commit();
-        if (ff.isAdded()){
-            transaction.hide(ff).add(R.id.fl_content, sf).commit();
+
+        if (sf.isAdded()){
+            transaction.hide(ff).show(sf);
+            transaction.addToBackStack(null);
+            transaction.commit();
+        }else {
+            transaction.hide(ff).add(R.id.fl_content, sf);
+            transaction.addToBackStack(null);
+            transaction.commit();
         }
 
     }
