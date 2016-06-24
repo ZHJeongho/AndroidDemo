@@ -33,4 +33,11 @@
         android:layout_height="wrap_content"
         android:text="Read From File"
         />
+    <Button
+        android:id="@+id/btn_db_test"
+        android:layout_below="@id/btn_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="DB Activity"
+        />
 </RelativeLayout>
