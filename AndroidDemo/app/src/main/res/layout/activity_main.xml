@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.jeongho.androiddemo.MainActivity">
+    tools:context=".activity.MainActivity">
 
 
     <FrameLayout
@@ -14,9 +14,23 @@
     </FrameLayout>
 
     <Button
+        android:id="@+id/btn_change_fragment"
         android:layout_below="@id/fl_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="changeFragment"
         android:text="change fragment"/>
+    <Button
+        android:id="@+id/btn_output"
+        android:layout_below="@id/btn_change_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Write to File"
+        />
+    <Button
+        android:id="@+id/btn_input"
+        android:layout_below="@id/btn_output"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Read From File"
+        />
 </RelativeLayout>
