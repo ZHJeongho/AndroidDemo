@@ -35,6 +35,9 @@ public class MainActivity extends BaseActivity {
     private Button mChangeFragmentBtn;
     private Button mOutputBtn;
     private Button mInputBtn;
+    private Button mDBTestBtn;
+
+
 
     private static final String TAG = "MainActivity";
 
@@ -53,6 +56,8 @@ public class MainActivity extends BaseActivity {
         mOutputBtn.setOnClickListener(this);
         mInputBtn = (Button) findViewById(R.id.btn_input);
         mInputBtn.setOnClickListener(this);
+        mDBTestBtn = (Button) findViewById(R.id.btn_db_test);
+        mDBTestBtn.setOnClickListener(this);
 
     }
 
@@ -95,6 +100,8 @@ public class MainActivity extends BaseActivity {
                 break;
             case R.id.btn_input:
                 readFromFile();
+            case R.id.btn_db_test:
+                DataBaseActivity.startAction(this);
         }
     }
 
