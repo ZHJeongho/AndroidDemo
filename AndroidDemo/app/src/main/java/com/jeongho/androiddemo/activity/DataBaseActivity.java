@@ -102,7 +102,7 @@ public class DataBaseActivity extends BaseActivity {
         values.put(FeedReaderContract.FeedEntry.COLUMN_NAME_SUBTITLE, "歪果仁");
         mDatabase.update(FeedReaderContract.FeedEntry.TABLE_NAME, values,
                 FeedReaderContract.FeedEntry.COLUMN_NAME_ENTRY_ID + " = ?",
-                new String[]{"123123"});
+                new String[]{"1"});
     }
 
     private void queryData() {
@@ -127,7 +127,7 @@ public class DataBaseActivity extends BaseActivity {
     private void deleteData(String selection, String[] selectionArgs) {
         mDatabase.delete(FeedReaderContract.FeedEntry.TABLE_NAME,
                 FeedReaderContract.FeedEntry.COLUMN_NAME_ENTRY_ID + " = ?",
-                new String[]{"89757"});
+                new String[]{"1"});
     }
 
     private void insertData(String id, String title, String subTitle) {
@@ -135,12 +135,30 @@ public class DataBaseActivity extends BaseActivity {
         values.put(FeedReaderContract.FeedEntry.COLUMN_NAME_ENTRY_ID, id);
         values.put(FeedReaderContract.FeedEntry.COLUMN_NAME_TITLE, id);
         values.put(FeedReaderContract.FeedEntry.COLUMN_NAME_SUBTITLE, subTitle);
-
         long newRow = 0;
         newRow = mDatabase.insert(FeedReaderContract.FeedEntry.TABLE_NAME, null, values);
         Log.d(TAG, "insert in " + newRow + " row");
+        //使用sql语句插入
         mDatabase.execSQL("INSERT INTO " + FeedReaderContract.FeedEntry.TABLE_NAME + " VALUES(" +
-                "'123123', '绅士', '薛之谦')");
+                "'1', '绅士', '薛之谦')");
+    }
+
+    private void transaction(){
+        mDatabase.beginTransaction();
+        try{
+            String id = "89757";
+            String title = "编号89757";
+            String subTitle = "JJ林俊杰";
+            insertData(id, title, subTitle);
+            deleteData(FeedReaderContract.FeedEntry.COLUMN_NAME_ENTRY_ID + " = ?",
+                    new String[]{"89757"});
+            queryData();
+            mDatabase.setTransactionSuccessful();
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            mDatabase.endTransaction();
+        }
     }
 
     public static void startAction(Context context){
