@@ -1,8 +1,11 @@
 package com.jeongho.androiddemo.activity;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -10,6 +13,8 @@ import android.widget.Toast;
 
 import com.jeongho.androiddemo.R;
 import com.jeongho.androiddemo.base.BaseActivity;
+import com.jeongho.androiddemo.broadcast.LocalReceiver;
+import com.jeongho.androiddemo.broadcast.NetworkChangeReceiver;
 import com.jeongho.androiddemo.fragment.FirstFragment;
 import com.jeongho.androiddemo.fragment.SecondFragment;
 import com.jeongho.androiddemo.utils.SharedPreferencesUtil;
@@ -37,7 +42,16 @@ public class MainActivity extends BaseActivity {
     private Button mInputBtn;
     private Button mDBTestBtn;
 
+    private Button mRegisterBroadcastBtn;
+    private Button mNormalBroadcastBtn;
+    private Button mOrderedBroadcastBtn;
+    private Button mLocalBroadcastBtn;
 
+    private NetworkChangeReceiver mNetworkChangeReceiver;
+
+    private LocalReceiver mLocalReceiver;
+    private LocalBroadcastManager mLocalBroadcastManager;
+    private IntentFilter mLocalBroadcastFilter;
 
     private static final String TAG = "MainActivity";
 
@@ -58,6 +72,14 @@ public class MainActivity extends BaseActivity {
         mInputBtn.setOnClickListener(this);
         mDBTestBtn = (Button) findViewById(R.id.btn_db_test);
         mDBTestBtn.setOnClickListener(this);
+        mRegisterBroadcastBtn = (Button) findViewById(R.id.btn_register_broadcast);
+        mRegisterBroadcastBtn.setOnClickListener(this);
+        mNormalBroadcastBtn = (Button) findViewById(R.id.btn_normal_broadcast);
+        mNormalBroadcastBtn.setOnClickListener(this);
+        mOrderedBroadcastBtn = (Button) findViewById(R.id.btn_ordered_broadcast);
+        mOrderedBroadcastBtn.setOnClickListener(this);
+        mLocalBroadcastBtn = (Button) findViewById(R.id.btn_local_broadcast);
+        mLocalBroadcastBtn.setOnClickListener(this);
 
     }
 
@@ -73,6 +95,12 @@ public class MainActivity extends BaseActivity {
     public void initData() {
         mPreferencesUtil = new SharedPreferencesUtil(this, FILE_KEY);
         mPreferencesUtil.putInt("age", 18);
+
+        mLocalReceiver = new LocalReceiver();
+        mLocalBroadcastManager = LocalBroadcastManager.getInstance(this);
+        mLocalBroadcastFilter = new IntentFilter();
+        mLocalBroadcastFilter.addAction("com.jeongho.androiddemo.localBroadcast");
+        mLocalBroadcastManager.registerReceiver(mLocalReceiver, mLocalBroadcastFilter);
     }
 
     @Override
@@ -100,8 +128,46 @@ public class MainActivity extends BaseActivity {
                 break;
             case R.id.btn_input:
                 readFromFile();
+                break;
             case R.id.btn_db_test:
                 DataBaseActivity.startAction(this);
+                break;
+            case R.id.btn_register_broadcast:
+                registerNetworkBroadcast();
+                break;
+            case R.id.btn_normal_broadcast:
+                sendNormalCustomBroadcast();
+                break;
+            case R.id.btn_ordered_broadcast:
+                sendOrderedlCustomBroadcast();
+                break;
+            case R.id.btn_local_broadcast:
+                sendLocalBroadcast();
+                break;
+        }
+    }
+
+    private void sendLocalBroadcast() {
+        Intent intent = new Intent("com.jeongho.androiddemo.localBroadcast");
+        mLocalBroadcastManager.sendBroadcast(intent);
+    }
+
+    private void sendOrderedlCustomBroadcast() {
+        Intent intent = new Intent("com.jeongho.androiddemo.myCustomBroadcast");
+        sendOrderedBroadcast(intent, null);
+    }
+
+    private void sendNormalCustomBroadcast() {
+        Intent intent = new Intent("com.jeongho.androiddemo.myCustomBroadcast");
+        sendBroadcast(intent);
+    }
+
+    private void registerNetworkBroadcast() {
+        if (mNetworkChangeReceiver == null){
+            IntentFilter intentFilter = new IntentFilter();
+            intentFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
+            mNetworkChangeReceiver = new NetworkChangeReceiver();
+            registerReceiver(mNetworkChangeReceiver, intentFilter);
         }
     }
 
@@ -174,5 +240,17 @@ public class MainActivity extends BaseActivity {
     protected void onResume() {
         super.onResume();
         Log.d(TAG, "onResume");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mNetworkChangeReceiver != null){
+            unregisterReceiver(mNetworkChangeReceiver);
+        }
+
+        if (mLocalReceiver != null){
+            mLocalBroadcastManager.unregisterReceiver(mLocalReceiver);
+        }
     }
 }

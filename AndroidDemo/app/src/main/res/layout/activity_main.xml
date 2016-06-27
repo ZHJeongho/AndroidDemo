@@ -40,4 +40,41 @@
         android:layout_height="wrap_content"
         android:text="DB Activity"
         />
+    <Button
+        android:id="@+id/btn_register_broadcast"
+        android:layout_below="@id/btn_db_test"
+        android:background="@color/colorPrimary"
+        android:textColor="@android:color/white"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="register broadcast"
+        />
+    <Button
+        android:id="@+id/btn_normal_broadcast"
+        android:layout_below="@id/btn_register_broadcast"
+        android:background="@color/colorPrimary"
+        android:textColor="@android:color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="send normal broadcast"
+        />
+    <Button
+        android:id="@+id/btn_ordered_broadcast"
+        android:layout_below="@id/btn_normal_broadcast"
+        android:background="@color/colorPrimary"
+        android:textColor="@android:color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="send ordered broadcast"
+        />
+    <Button
+        android:id="@+id/btn_local_broadcast"
+        android:layout_below="@id/btn_ordered_broadcast"
+        android:background="@color/colorPrimary"
+        android:textColor="@android:color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="send local broadcast"
+        />
 </RelativeLayout>

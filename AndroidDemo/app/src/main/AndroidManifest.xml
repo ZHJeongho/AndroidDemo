@@ -2,6 +2,9 @@
 <manifest package="com.jeongho.androiddemo"
           xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -16,6 +19,22 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.DataBaseActivity"/>
+        <receiver android:name=".broadcast.NetworkChangeReceiver"/>
+        <receiver android:name=".broadcast.BootCompleteReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+            </intent-filter>
+        </receiver>
+        <receiver android:name=".broadcast.MyCustomBroadcast">
+            <intent-filter android:priority="100">
+                <action android:name="com.jeongho.androiddemo.myCustomBroadcast"/>
+            </intent-filter>
+        </receiver>
+        <receiver android:name=".broadcast.AnotherMyCustomBroadcast">
+            <intent-filter android:priority="50">
+                <action android:name="com.jeongho.androiddemo.myCustomBroadcast"/>
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>
