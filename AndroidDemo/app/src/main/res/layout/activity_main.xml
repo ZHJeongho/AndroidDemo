@@ -41,8 +41,15 @@
         android:text="DB Activity"
         />
     <Button
-        android:id="@+id/btn_register_broadcast"
+        android:id="@+id/btn_contact"
         android:layout_below="@id/btn_db_test"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="contact Activity"
+        />
+    <Button
+        android:id="@+id/btn_register_broadcast"
+        android:layout_below="@id/btn_contact"
         android:background="@color/colorPrimary"
         android:textColor="@android:color/white"
         android:layout_marginTop="10dp"

@@ -4,6 +4,8 @@
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.READ_CONTACTS"/>
+    <uses-permission android:name="android.permission.WRITE_CONTACTS"/>
 
     <application
         android:allowBackup="true"
@@ -35,6 +37,7 @@
                 <action android:name="com.jeongho.androiddemo.myCustomBroadcast"/>
             </intent-filter>
         </receiver>
+        <activity android:name=".activity.ContactActivity"/>
     </application>
 
 </manifest>

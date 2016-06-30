@@ -41,6 +41,7 @@ public class MainActivity extends BaseActivity {
     private Button mOutputBtn;
     private Button mInputBtn;
     private Button mDBTestBtn;
+    private Button mContactBtn;
 
     private Button mRegisterBroadcastBtn;
     private Button mNormalBroadcastBtn;
@@ -80,6 +81,8 @@ public class MainActivity extends BaseActivity {
         mOrderedBroadcastBtn.setOnClickListener(this);
         mLocalBroadcastBtn = (Button) findViewById(R.id.btn_local_broadcast);
         mLocalBroadcastBtn.setOnClickListener(this);
+        mContactBtn = (Button) findViewById(R.id.btn_contact);
+        mContactBtn.setOnClickListener(this);
 
     }
 
@@ -143,6 +146,9 @@ public class MainActivity extends BaseActivity {
                 break;
             case R.id.btn_local_broadcast:
                 sendLocalBroadcast();
+                break;
+            case R.id.btn_contact:
+                ContactActivity.startAction(this);
                 break;
         }
     }
