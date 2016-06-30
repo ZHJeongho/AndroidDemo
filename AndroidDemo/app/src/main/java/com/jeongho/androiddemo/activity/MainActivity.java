@@ -1,8 +1,15 @@
 package com.jeongho.androiddemo.activity;
 
+import android.annotation.TargetApi;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.media.RingtoneManager;
+import android.net.Uri;
+import android.os.Build;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.LocalBroadcastManager;
@@ -47,6 +54,7 @@ public class MainActivity extends BaseActivity {
     private Button mNormalBroadcastBtn;
     private Button mOrderedBroadcastBtn;
     private Button mLocalBroadcastBtn;
+    private Button mShowNotificationBtn;
 
     private NetworkChangeReceiver mNetworkChangeReceiver;
 
@@ -83,6 +91,8 @@ public class MainActivity extends BaseActivity {
         mLocalBroadcastBtn.setOnClickListener(this);
         mContactBtn = (Button) findViewById(R.id.btn_contact);
         mContactBtn.setOnClickListener(this);
+        mShowNotificationBtn = (Button) findViewById(R.id.btn_show_notification);
+        mShowNotificationBtn.setOnClickListener(this);
 
     }
 
@@ -108,23 +118,23 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.btn_change_fragment:
                 FragmentTransaction transaction = fm.beginTransaction();
                 SecondFragment sf = new SecondFragment();
                 //        transaction.replace(R.id.fl_content, sf);
                 //        transaction.commit();
-                if (sf.isAdded()){
+                if (sf.isAdded()) {
                     transaction.hide(ff).show(sf);
                     transaction.addToBackStack(null);
                     transaction.commit();
-                }else {
+                } else {
                     transaction.hide(ff).add(R.id.fl_content, sf);
                     transaction.addToBackStack(null);
                     transaction.commit();
                 }
 
-//                Toast.makeText(this, mPreferencesUtil.getInt("age", 0) + "", Toast.LENGTH_SHORT).show();
+                //                Toast.makeText(this, mPreferencesUtil.getInt("age", 0) + "", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.btn_output:
                 saveFile();
@@ -150,26 +160,70 @@ public class MainActivity extends BaseActivity {
             case R.id.btn_contact:
                 ContactActivity.startAction(this);
                 break;
+            case R.id.btn_show_notification:
+                showNotification();
+                break;
         }
     }
 
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+    private void showNotification() {
+        //设置点击intent
+        Intent resultIntent = new Intent(this, ContactActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, (int) System.currentTimeMillis(), resultIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+        //设置提示音
+        Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        //设置样式  通知栏抽屉样式设置
+        Notification.Style style = new Notification.BigTextStyle();
+
+        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        Notification.Builder builder = new Notification.Builder(this);
+        Notification notification = builder.setContentTitle("This is title")
+                .setContentText("This is Text")
+                .setSubText("this is sub text")
+                .setTicker("this is ticker")
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setContentIntent(pendingIntent)
+                .setSound(alarmSound)
+                .setStyle(style)
+                .build();
+//        RemoteViews remoteViews = new RemoteViews(getPackageName(), R.layout.custom_notification);
+//        builder.setContent(remoteViews)
+//                .setSmallIcon(R.mipmap.ic_launcher)
+//                .setContentIntent(pendingIntent);
+//        Notification notification = builder.build();
+        notificationManager.notify(1, notification);
+    }
+
+    /**
+     * 发送本地广播
+     */
     private void sendLocalBroadcast() {
         Intent intent = new Intent("com.jeongho.androiddemo.localBroadcast");
         mLocalBroadcastManager.sendBroadcast(intent);
     }
 
+    /**
+     * 发送有序自定义广播
+     */
     private void sendOrderedlCustomBroadcast() {
         Intent intent = new Intent("com.jeongho.androiddemo.myCustomBroadcast");
         sendOrderedBroadcast(intent, null);
     }
 
+    /**
+     * 发送正常自定义广播
+     */
     private void sendNormalCustomBroadcast() {
         Intent intent = new Intent("com.jeongho.androiddemo.myCustomBroadcast");
         sendBroadcast(intent);
     }
 
+    /**
+     * 注册网络连接广播
+     */
     private void registerNetworkBroadcast() {
-        if (mNetworkChangeReceiver == null){
+        if (mNetworkChangeReceiver == null) {
             IntentFilter intentFilter = new IntentFilter();
             intentFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
             mNetworkChangeReceiver = new NetworkChangeReceiver();
@@ -177,6 +231,9 @@ public class MainActivity extends BaseActivity {
         }
     }
 
+    /**
+     * 从文件读数据
+     */
     private void readFromFile() {
         FileInputStream inputStream = null;
         StringBuilder content = new StringBuilder();
@@ -184,16 +241,16 @@ public class MainActivity extends BaseActivity {
         try {
             inputStream = openFileInput("myfile");
             br = new BufferedReader(new InputStreamReader(inputStream));
-            String line ="";
-            while ((line = br.readLine()) != null){
+            String line = "";
+            while ((line = br.readLine()) != null) {
                 content.append(line);
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
-        }finally {
-            if (br != null){
+        } finally {
+            if (br != null) {
                 Log.d("reader", "is not null");
                 try {
                     br.close();
@@ -205,6 +262,9 @@ public class MainActivity extends BaseActivity {
         Toast.makeText(this, content.toString(), Toast.LENGTH_SHORT).show();
     }
 
+    /**
+     * 存文件
+     */
     private void saveFile() {
         FileOutputStream out = null;
         String fileName = "myfile";
@@ -213,8 +273,8 @@ public class MainActivity extends BaseActivity {
 
         try {
             out = openFileOutput(fileName, Context.MODE_PRIVATE);
-//            out.write(value.getBytes());
-//            out.close();
+            //            out.write(value.getBytes());
+            //            out.close();
 
             //同上一样调用FileOutput的write
             //最终调用IoBridge
@@ -225,8 +285,8 @@ public class MainActivity extends BaseActivity {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
-        }finally {
-            if (writer != null){
+        } finally {
+            if (writer != null) {
                 try {
                     writer.close();
                 } catch (IOException e) {
@@ -251,11 +311,11 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (mNetworkChangeReceiver != null){
+        if (mNetworkChangeReceiver != null) {
             unregisterReceiver(mNetworkChangeReceiver);
         }
 
-        if (mLocalReceiver != null){
+        if (mLocalReceiver != null) {
             mLocalBroadcastManager.unregisterReceiver(mLocalReceiver);
         }
     }

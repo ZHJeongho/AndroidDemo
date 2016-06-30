@@ -37,7 +37,9 @@
                 <action android:name="com.jeongho.androiddemo.myCustomBroadcast"/>
             </intent-filter>
         </receiver>
-        <activity android:name=".activity.ContactActivity"/>
+        <activity android:name=".activity.ContactActivity">
+
+        </activity>
     </application>
 
 </manifest>

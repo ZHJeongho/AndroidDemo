@@ -84,4 +84,11 @@
         android:layout_height="wrap_content"
         android:text="send local broadcast"
         />
+    <Button
+        android:id="@+id/btn_show_notification"
+        android:layout_below="@id/btn_local_broadcast"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Show Notification"
+        />
 </RelativeLayout>
