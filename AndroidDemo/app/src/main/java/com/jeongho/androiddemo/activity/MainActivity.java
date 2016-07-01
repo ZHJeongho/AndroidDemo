@@ -10,6 +10,7 @@ import android.content.IntentFilter;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.LocalBroadcastManager;
@@ -56,6 +57,8 @@ public class MainActivity extends BaseActivity {
     private Button mLocalBroadcastBtn;
     private Button mShowNotificationBtn;
 
+    private FloatingActionButton mSMSFab;
+
     private NetworkChangeReceiver mNetworkChangeReceiver;
 
     private LocalReceiver mLocalReceiver;
@@ -93,6 +96,9 @@ public class MainActivity extends BaseActivity {
         mContactBtn.setOnClickListener(this);
         mShowNotificationBtn = (Button) findViewById(R.id.btn_show_notification);
         mShowNotificationBtn.setOnClickListener(this);
+
+        mSMSFab = (FloatingActionButton) findViewById(R.id.fab_sms);
+        mSMSFab.setOnClickListener(this);
 
     }
 
@@ -162,6 +168,9 @@ public class MainActivity extends BaseActivity {
                 break;
             case R.id.btn_show_notification:
                 showNotification();
+                break;
+            case R.id.fab_sms:
+                SMSActivity.startAction(this);
                 break;
         }
     }
