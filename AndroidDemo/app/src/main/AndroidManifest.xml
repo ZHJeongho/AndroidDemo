@@ -9,7 +9,6 @@
     <uses-permission android:name="android.permission.RECEIVE_SMS"/>
     <uses-permission android:name="android.permission.SEND_SMS"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="write_in"
 
     <application
         android:allowBackup="true"
@@ -24,7 +23,6 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".activity.DataBaseActivity"/>
         <receiver android:name=".broadcast.NetworkChangeReceiver"/>
         <receiver android:name=".broadcast.BootCompleteReceiver">
             <intent-filter>
@@ -41,6 +39,7 @@
                 <action android:name="com.jeongho.androiddemo.myCustomBroadcast"/>
             </intent-filter>
         </receiver>
+        <activity android:name=".activity.DataBaseActivity"/>
         <activity android:name=".activity.ContactActivity">
         </activity>
         <activity android:name=".activity.SMSActivity"/>
