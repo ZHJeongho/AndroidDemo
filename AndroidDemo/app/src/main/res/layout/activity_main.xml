@@ -93,7 +93,8 @@
         android:layout_height="wrap_content"
         android:text="Show Notification"
         />
-    <android.support.design.widget.FloatingActionButton
+
+    <com.github.clans.fab.FloatingActionButton
         android:id="@+id/fab_sms"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -104,6 +105,7 @@
         android:layout_marginBottom="10dp"
         app:fabSize="normal"
         android:elevation="6dp"/>
+
     <com.github.clans.fab.FloatingActionMenu
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -111,8 +113,10 @@
         android:layout_alignParentBottom="true"
         android:layout_marginLeft="10dp"
         android:layout_marginBottom="10dp"
-        app:menu_icon="@mipmap/ic_launcher">
+        app:menu_icon="@mipmap/ic_launcher"
+        android:elevation="6dp">
         <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fab_camera"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@mipmap/ic_launcher"

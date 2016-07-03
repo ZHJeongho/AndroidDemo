@@ -10,7 +10,6 @@ import android.content.IntentFilter;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.LocalBroadcastManager;
@@ -19,6 +18,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.github.clans.fab.FloatingActionButton;
 import com.jeongho.androiddemo.R;
 import com.jeongho.androiddemo.base.BaseActivity;
 import com.jeongho.androiddemo.broadcast.LocalReceiver;
@@ -35,6 +35,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+
+//import android.support.design.widget.FloatingActionButton;
 
 public class MainActivity extends BaseActivity {
 
@@ -58,6 +60,7 @@ public class MainActivity extends BaseActivity {
     private Button mShowNotificationBtn;
 
     private FloatingActionButton mSMSFab;
+    private FloatingActionButton mCameraFab;
 
     private NetworkChangeReceiver mNetworkChangeReceiver;
 
@@ -100,6 +103,9 @@ public class MainActivity extends BaseActivity {
         mSMSFab = (FloatingActionButton) findViewById(R.id.fab_sms);
         mSMSFab.setOnClickListener(this);
 
+        mCameraFab = (FloatingActionButton) findViewById(R.id.fab_camera);
+        mCameraFab.setOnClickListener(this);
+
     }
 
     private void initFragment() {
@@ -140,7 +146,7 @@ public class MainActivity extends BaseActivity {
                     transaction.commit();
                 }
 
-                //                Toast.makeText(this, mPreferencesUtil.getInt("age", 0) + "", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this, mPreferencesUtil.getInt("age", 0) + "", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.btn_output:
                 saveFile();
@@ -171,6 +177,9 @@ public class MainActivity extends BaseActivity {
                 break;
             case R.id.fab_sms:
                 SMSActivity.startAction(this);
+                break;
+            case R.id.fab_camera:
+                CameraActivity.startAction(this);
                 break;
         }
     }
