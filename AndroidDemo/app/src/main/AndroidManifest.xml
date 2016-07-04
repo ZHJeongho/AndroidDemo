@@ -45,6 +45,7 @@
         <activity android:name=".activity.SMSActivity"/>
         <receiver android:name=".activity.SMSActivity$SMSReceiver"/>
         <activity android:name=".activity.CameraActivity"/>
+        <activity android:name=".activity.MediaActivity"/>
     </application>
 
 </manifest>

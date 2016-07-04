@@ -10,15 +10,18 @@ import android.widget.TextView;
 import com.jeongho.androiddemo.R;
 import com.jeongho.androiddemo.bean.AudioBean;
 
-import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Created by Jeongho on 2016/7/4.
  */
 public class AudioAdapter extends RecyclerView.Adapter<AudioAdapter.AudioHolder>{
     private Context mContext;
-    private LinkedList<AudioBean> mAudioBeans;
-    public AudioAdapter(Context context, LinkedList<AudioBean> audioBeans) {
+    private List<AudioBean> mAudioBeans;
+
+    private OnItemClickListener mOnItemClickListener;
+
+    public AudioAdapter(Context context, List<AudioBean> audioBeans) {
         mContext = context;
         mAudioBeans = audioBeans;
     }
@@ -30,9 +33,20 @@ public class AudioAdapter extends RecyclerView.Adapter<AudioAdapter.AudioHolder>
     }
 
     @Override
-    public void onBindViewHolder(AudioHolder holder, int position) {
+    public void onBindViewHolder(final AudioHolder holder, int position) {
         //绑定数据
-//        holder.mAudioIDTv
+        //holder.mAudioIDTv.setText(mAudioBeans.get(position).getId());
+        holder.mAudioNameTv.setText(mAudioBeans.get(position).getTitle());
+
+        if (mOnItemClickListener != null){
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = holder.getLayoutPosition();
+                    mOnItemClickListener.onItemClick(v, position);
+                }
+            });
+        }
     }
 
     @Override
@@ -49,5 +63,13 @@ public class AudioAdapter extends RecyclerView.Adapter<AudioAdapter.AudioHolder>
             mAudioIDTv = (TextView) itemView.findViewById(R.id.tv_audio_id);
             mAudioNameTv = (TextView) itemView.findViewById(R.id.tv_audio_name);
         }
+    }
+
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener){
+        mOnItemClickListener = onItemClickListener;
+    }
+
+    public interface OnItemClickListener{
+        void onItemClick(View view, int position);
     }
 }
