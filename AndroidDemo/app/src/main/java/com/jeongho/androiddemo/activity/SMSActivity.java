@@ -38,6 +38,8 @@ public class SMSActivity extends BaseActivity{
     public void initData() {
         mReceiveFilter = new IntentFilter();
         mReceiveFilter.addAction("android.provider.Telephony.SMS_RECEIVED");
+        //设置优先级
+        mReceiveFilter.setPriority(100);
         mReceiver = new SMSReceiver();
         registerReceiver(mReceiver, mReceiveFilter);
     }
@@ -57,6 +59,9 @@ public class SMSActivity extends BaseActivity{
         @TargetApi(Build.VERSION_CODES.M)
         @Override
         public void onReceive(Context context, Intent intent) {
+            //信息拦截
+            abortBroadcast();
+
             Bundle bundle = intent.getExtras();
             Object[] pdus = (Object[]) bundle.get("pdus");
             SmsMessage[] messages = new SmsMessage[pdus.length];
