@@ -42,7 +42,7 @@
             android:layout_height="wrap_content"
             android:padding="10dp"
             android:layout_gravity="center_vertical"
-            android:text="From:"/>
+            android:text="To:"/>
         <EditText
             android:id="@+id/edt_to"
             android:layout_width="match_parent"
