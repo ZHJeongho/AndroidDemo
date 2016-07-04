@@ -123,5 +123,13 @@
             fab:fabSize="mini"
             fab:fab_label="camera"
             />
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fab_media"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_launcher"
+            fab:fabSize="mini"
+            fab:fab_label="media"
+            />
     </com.github.clans.fab.FloatingActionMenu>
 </RelativeLayout>

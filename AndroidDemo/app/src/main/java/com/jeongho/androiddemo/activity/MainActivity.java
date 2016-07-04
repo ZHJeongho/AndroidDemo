@@ -61,6 +61,7 @@ public class MainActivity extends BaseActivity {
 
     private FloatingActionButton mSMSFab;
     private FloatingActionButton mCameraFab;
+    private FloatingActionButton mMediaFab;
 
     private NetworkChangeReceiver mNetworkChangeReceiver;
 
@@ -105,6 +106,8 @@ public class MainActivity extends BaseActivity {
 
         mCameraFab = (FloatingActionButton) findViewById(R.id.fab_camera);
         mCameraFab.setOnClickListener(this);
+        mMediaFab = (FloatingActionButton) findViewById(R.id.fab_media);
+        mMediaFab.setOnClickListener(this);
 
     }
 
@@ -180,6 +183,9 @@ public class MainActivity extends BaseActivity {
                 break;
             case R.id.fab_camera:
                 CameraActivity.startAction(this);
+                break;
+            case R.id.fab_media:
+                MediaActivity.startAction(this);
                 break;
         }
     }
