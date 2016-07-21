@@ -170,6 +170,52 @@ public boolean onTouchEvent(MotionEvent event) {
 ```
 ## Scroller
 
+使用Scroller基本就是分三个步骤：
+
+1. 初始化Scroller  
+
+  ``` java
+  Scroller Scroller = new Scroller(context);
+
+  ```
+
+2. 重写computeScroll()方法
+
+  ``` java
+@Override
+public void computeScroll() {
+  //返回true 表示动画没有执行完毕
+  if (mScroller.computeScrollOffset()){
+      ((View)getParent()).scrollTo(mScroller.getCurrX(), mScroller.getCurrY());
+      invalidate();
+  }
+}
+
+  ```
+
+3. 调用startScroll方法
+
+> startScroll(int startX, int startY, int dx, int dy)
+
+> startScroll(int startX, int startY, int dx, int dy, int duration)
+
+实现平滑移动，就需要调用上面两个方法其中的一个，当然只差一个参数而已。
+
+``` java
+case MotionEvent.ACTION_UP:
+    View parent = (View) getParent();
+    //松手后，父view会平滑移动回原位
+    mScroller.startScroll(parent.getScrollX(), parent.getScrollY(),
+            -parent.getScrollX(), -parent.getScrollY());
+    invalidate();
+```
+
+执行startScroll方法的时候，才会触发computeScroll()。
+
+invalidate -> draw -> computeScroll
+
+才会循环取mScrollX， mScrollY，达到平移的效果。
+
 ## 属性动画
 
 ## ViewDragHelper
