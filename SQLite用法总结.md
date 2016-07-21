@@ -1,13 +1,13 @@
-#SQLite基本用法
+# SQLite基本用法
 ---
 
 SQLite是Android系统上的轻量级数据库。（当然在.NET中也是可以引用的）
 
 SQlite与SQL Server、MySQL一样，都是可以根据SQL语句来执行最基本的增删改查的。但是并不是每个开发Android的攻城狮都会使用SQL语句执行数据库操作，所以Google也专门为SQLite定制了API供不熟悉SQL语句的程序员使用。
 
-##新建数据库
+## 新建数据库
 
-###新建数据库步骤：
+### 新建数据库步骤：
 
 - **实现SQLiteOpenHelper，实现OnCreat()，OnUpdate()方法**
 
@@ -83,7 +83,7 @@ mDBHelper = new FeedReaderDBHelper(this);
 mDatabase = mDBHelper.getWritableDatabase();
 ```
 
-##升级数据库
+## 升级数据库
 
 升级数据库需要执行OnUpdate()方法，如何执行该方法呢？
 
@@ -122,7 +122,7 @@ SQLiteOpenHelper的构造函数
 
 >所有新建的表单都需要在OnCreate()方法中重新建表。
 
-##添加数据
+## 添加数据
 
 1. 实例化一个ContentValue对象，使用其putXXX()方法对每个字段赋值
 2. 调用database的insert()方法将初始化好的ContentValue对象插入到相应的表中
@@ -162,7 +162,7 @@ SQLiteOpenHelper的构造函数
 
 ```
 
-##更新数据
+## 更新数据
 
 调用database的update()方法
 
@@ -189,7 +189,7 @@ SQLiteOpenHelper的构造函数
     }
 ```
 
-##删除数据
+## 删除数据
 
 与插入、更新是大同小异，调用database的delete()方法
 
@@ -223,7 +223,7 @@ SQLiteOpenHelper的构造函数
     }
 ```
 
-##查询数据
+## 查询数据
 
 ```
 	//表名
@@ -272,7 +272,7 @@ query方法返回的是一个Cursor对象（游标，光标），使用这个光
     }
 ```
 
-##事务
+## 事务
 
 数据库的一些操作要保证是一起完成的，就好比银行转账。例如：A转给B，A的余额减少的同时，B增加。如果A减少完，B再增加，可能因为一些异常，导致A的钱转出了，而B并没有增加。。。
 
