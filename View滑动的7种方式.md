@@ -219,3 +219,5 @@ invalidate -> draw -> computeScroll
 ## 属性动画
 
 ## ViewDragHelper
+
+**见另外一篇ViewDragHelper文章**
